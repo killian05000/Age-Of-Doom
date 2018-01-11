@@ -4,7 +4,7 @@ public class Principal
 {
   public static void main(String[] agrs)
   {
-    GraphicWindow window = new GraphicWindow("Window tp7");
+    GraphicWindow window = new GraphicWindow("Search duplicates");
     window.setVisible(true);
   }
 }

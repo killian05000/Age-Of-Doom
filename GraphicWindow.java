@@ -3,9 +3,14 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import javax.swing.JTextField;
 
-class GraphicWindow extends JFrame implements ActionListener
+public class GraphicWindow extends JFrame implements ActionListener
 {
+  private JTextField jtf_path;
+  private JLabel display_path;
+
   GraphicWindow(String s)
   {
     super(s);
@@ -13,9 +18,17 @@ class GraphicWindow extends JFrame implements ActionListener
     setLocationRelativeTo(null);
     setResizable(false);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    display_path = new JLabel("hhhhhhhhhhhhhhhhhhhhhhhhhh");
+    jtf_path = new JTextField(40);
+    add(display_path);
+    add(jtf_path);
+
+    // JPanel panel = new JPane();
+    // panel.setLayout(new FlowLayout());
+    // panel.add(display_path);
 
     JMenuBar menuBar = new JMenuBar();
-    JMenu menu = new JMenu("File");
+    JMenu menu = new JMenu("Folder");
     JMenuItem item;
     setJMenuBar(menuBar);
     menuBar.add(menu);
@@ -60,15 +73,15 @@ class GraphicWindow extends JFrame implements ActionListener
 
     if (evenement.getActionCommand().equals("Load"))
     {
-      System.out.println("MENU LOAD");
-
       JFileChooser selector = new JFileChooser();
-      selector.addChoosableFileFilter(new FileNameExtensionFilter("txt files", "txt"));
-      int result = selector.showOpenDialog(null);
+      selector.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 
-      if (result == JFileChooser.APPROVE_OPTION)
+      if (selector.showOpenDialog(this) == JFileChooser.APPROVE_OPTION)
       {
-        System.out.println("Chosen file : " + selector.getSelectedFile().getAbsolutePath());
+        File file = selector.getSelectedFile();
+        display_path.setText(file.getPath());
+        jtf_path.setText(file.getPath());
+        System.out.println("Chosen file : " + file);
       }
     }
     if (evenement.getActionCommand().equals("Save"))
