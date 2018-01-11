@@ -9,6 +9,7 @@ public class FindDuplicateFiles
 {
 Vector<Vector<File> > duplicateFiles;
 long minFileLength = 0;
+String regexFileName = ".*";
 
 public void find(Path dir) throws IOException
 {
@@ -17,6 +18,7 @@ public void find(Path dir) throws IOException
 
         IndexVisitor indexVisitor = new IndexVisitor();
         indexVisitor.indexFiles = indexFiles;
+        indexVisitor.regexFileName = regexFileName;
         indexVisitor.minFileLength = minFileLength;
         Files.walkFileTree(dir, indexVisitor);
 
@@ -56,6 +58,7 @@ public void find(Path dir1, Path dir2) throws IOException
         IndexVisitor indexVisitor = new IndexVisitor();
         indexVisitor.indexFiles = indexFiles;
         indexVisitor.minFileLength = minFileLength;
+        indexVisitor.regexFileName = regexFileName;
         Files.walkFileTree(dir1, indexVisitor);
 
         CompareFileVisitor compareFileVisitor = new CompareFileVisitor();

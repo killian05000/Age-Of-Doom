@@ -11,12 +11,13 @@ public class IndexVisitor extends SimpleFileVisitor<Path>
 {
 HashMap<Long, Vector<FileComparator> > indexFiles;
 long minFileLength = 0;
+String regexFileName = ".*";
 
 public FileVisitResult visitFile(Path file, BasicFileAttributes attrs)
 throws IOException
 {
         File f = file.toFile();
-        if (f.canRead() && f.length() >= minFileLength) {
+        if (f.canRead() && f.length() >= minFileLength && file.getFileName().toString().matches(regexFileName)) {
                 Vector<FileComparator> v;
                 if(indexFiles.containsKey(f.length())) {
                         v = indexFiles.get(f.length());
