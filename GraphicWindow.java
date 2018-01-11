@@ -4,16 +4,25 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
-import javax.swing.JTextField;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.io.IOException;
 
 public class GraphicWindow extends JFrame implements ActionListener
 {
+  private String single_folder_path;
   private String folder1_path;
   private String folder2_path;
+  private JLabel display_single_folder_path;
   private JLabel display_folder1_path;
   private JLabel display_folder2_path;
+  private JLabel display_duplicates;
+  private JButton load_single_folder;
 	private JButton load_folder1;
   private JButton load_folder2;
+
+  private JTextArea textPane = new JTextArea();
+  private JScrollPane scroll = new JScrollPane(textPane);
 
   GraphicWindow(String s)
   {
@@ -33,10 +42,6 @@ public class GraphicWindow extends JFrame implements ActionListener
       item = new JMenuItem("Load");
       menu.add(item);
       item.addActionListener(this);
-
-      item = new JMenuItem("Save");
-      menu.add(item);
-      item.addActionListener(this);
       menu.add(new JSeparator());
 
       item = new JMenuItem("Quit");
@@ -53,7 +58,22 @@ public class GraphicWindow extends JFrame implements ActionListener
   panel.add(Box.createRigidArea(new Dimension(0,5)));
   panel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 
+  JLabel space_line = new JLabel(" ");
+  JLabel space_line1 = new JLabel(" ");
+  JLabel space_line2 = new JLabel(" ");
+  JLabel space_line3 = new JLabel(" ");
+  JLabel space_line4 = new JLabel(" ");
+  JLabel space_line5 = new JLabel(" ");
 
+  JLabel single_folder = new JLabel("Compare 1 folder :");
+  display_single_folder_path = new JLabel("The folder's path");
+  load_single_folder = new JButton("Load");
+  load_single_folder.addActionListener(this);
+
+  JButton validation1 = new JButton("Compare (1)");
+  validation1.addActionListener(this);
+
+  JLabel folders2 = new JLabel("Compare 2 folders : ");
   display_folder1_path = new JLabel("First folder's path");
   load_folder1 = new JButton("Load1");
   load_folder1.addActionListener(this);
@@ -62,17 +82,34 @@ public class GraphicWindow extends JFrame implements ActionListener
   load_folder2 = new JButton("Load2");
   load_folder2.addActionListener(this);
 
-  JButton validation = new JButton("ok");
-  validation.addActionListener(this);
+  JButton validation2 = new JButton("Compare (2)");
+  validation2.addActionListener(this);
 
-  JLabel display_duplicates = new JLabel("here will be the duplicates");
+  display_duplicates = new JLabel("here will be the duplicates");
 
+  this.getContentPane().add(scroll, BorderLayout.CENTER);
+  //this.getContentPane().add(BorderLayout.SOUTH);
 
+  panel.add(single_folder);
+  panel.add(space_line);
+  panel.add(display_single_folder_path);
+  panel.add(load_single_folder);
+  panel.add(validation1);
+
+  panel.add(space_line1);
+  panel.add(space_line2);
+
+  panel.add(folders2);
+  panel.add(space_line3);
 	panel.add(display_folder1_path);
   panel.add(load_folder1);
   panel.add(display_folder2_path);
   panel.add(load_folder2);
-  panel.add(validation);
+  panel.add(validation2);
+
+  panel.add(space_line4);
+  panel.add(space_line5);
+
   panel.add(display_duplicates);
 
 	return panel;
@@ -81,6 +118,19 @@ public class GraphicWindow extends JFrame implements ActionListener
   public void actionPerformed(ActionEvent evenement)
   {
               ///////// MENU FILE /////////
+
+    if (evenement.getActionCommand().equals("Load"))
+    {
+      JFileChooser selector = new JFileChooser();
+      selector.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+
+      if (selector.showOpenDialog(this) == JFileChooser.APPROVE_OPTION)
+      {
+        File file = selector.getSelectedFile();
+        display_single_folder_path.setText(file.getPath());
+        System.out.println("Chosen file : " + file);
+      }
+    }
 
     if (evenement.getActionCommand().equals("Load1"))
     {
@@ -108,18 +158,42 @@ public class GraphicWindow extends JFrame implements ActionListener
       }
     }
 
-    if (evenement.getActionCommand().equals("ok"))
+    if (evenement.getActionCommand().equals("Compare (1)")) // Avec 1 dossier
+    {
+      single_folder_path = display_single_folder_path.getText();
+      System.out.println("Compare 1 : "+single_folder_path);
+      display_duplicates.setText("les voici : ");
+
+      //Path d1 = Paths.get(single_folder_path);
+      //FindDuplicateFiles fdf = new FindDuplicateFiles();
+      // try
+      // {
+      //   fdf.find(d1);
+      // } catch (IOException e)
+      // {
+      //    System.out.println("WOOOOOOO error : compare 1");
+      // }
+    }
+
+    if (evenement.getActionCommand().equals("Compare (2)")) // Avec 2 dossiers
     {
       folder1_path = display_folder1_path.getText();
       folder2_path = display_folder2_path.getText();
-      System.out.println(folder1_path+" # "+folder2_path);
+      System.out.println("Compare 2 : "+folder1_path+" # "+folder2_path);
       display_duplicates.setText("les voici : ");
+
+      //Path d1 = Paths.get(folder1_path);
+      //Path d2 = Paths.get(folder2_path);
+      //FindDuplicateFiles fdf = new FindDuplicateFiles();
+      // try
+      // {
+      //   fdf.find(d1,d2);
+      // } catch (IOException e)
+      // {
+      //    System.out.println("WOOOOOOO error : compare 2");
+      // }
     }
 
-    if (evenement.getActionCommand().equals("Save"))
-    {
-      System.out.println("MENU SAVE");
-    }
     if (evenement.getActionCommand().equals("Quit"))
     {
       System.out.println("MENU QUIT ATTEMPT");
