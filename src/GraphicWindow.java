@@ -59,6 +59,12 @@ public class GraphicWindow extends JFrame implements ActionListener
   panel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 
   JLabel space_line = new JLabel(" ");
+  JLabel space_line1 = new JLabel(" ");
+  JLabel space_line2 = new JLabel(" ");
+  JLabel space_line3 = new JLabel(" ");
+  JLabel space_line4 = new JLabel(" ");
+  JLabel space_line5 = new JLabel(" ");
+
   JLabel single_folder = new JLabel("Compare 1 folder :");
   display_single_folder_path = new JLabel("The folder's path");
   load_single_folder = new JButton("Load");
@@ -89,20 +95,20 @@ public class GraphicWindow extends JFrame implements ActionListener
   panel.add(display_single_folder_path);
   panel.add(load_single_folder);
   panel.add(validation1);
-  
-  panel.add(space_line);
-  panel.add(space_line);
+
+  panel.add(space_line1);
+  panel.add(space_line2);
 
   panel.add(folders2);
-  panel.add(space_line);
+  panel.add(space_line3);
 	panel.add(display_folder1_path);
   panel.add(load_folder1);
   panel.add(display_folder2_path);
   panel.add(load_folder2);
   panel.add(validation2);
 
-  panel.add(space_line);
-  panel.add(space_line);
+  panel.add(space_line4);
+  panel.add(space_line5);
 
   panel.add(display_duplicates);
 
